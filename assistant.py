@@ -9,17 +9,19 @@ print("heyy")
 import speech_recognition as sr
 speechRec = sr.Recognizer()
 
-with sr.Microphone() as source:
-    print("Talk")
-    audio_text = speechRec.listen(source)
-    print("Time over, thanks")
-# recognize_() method will throw a request error if the API is unreachable, hence using exception handling
-    
-    try:
-        print("Text: " + speechRec.recognize_google(audio_text))
-    except:
-         print("Sorry, I did not get that")
-         
+def stt():
+    with sr.Microphone() as source:
+        print("Talk")
+        audio_text = speechRec.listen(source)
+        print("Time over, thanks")
+    # recognize_() method will throw a request error if the API is unreachable, hence using exception handling
+        
+        try:
+            print("Text: " + speechRec.recognize_google(audio_text))
+        except:
+            print("Sorry, I did not get that")
+
+stt()         
 """
 
 import tensorflow as tf
@@ -78,18 +80,18 @@ while(True):
 """
 import pyttsx3 
 
-converter = pyttsx3.init() 
+tts = pyttsx3.init() 
 
 # Sets speed percent  
-converter.setProperty('rate', 140) 
+tts.setProperty('rate', 140) 
 # Set volume 0-1 
-converter.setProperty('volume', 0.5)
+tts.setProperty('volume', 0.5)
 
 voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
-converter.setProperty('voice', voice_id) 
+tts.setProperty('voice', voice_id) 
 
-converter.say('Gabi, go to work already!')
-converter.runAndWait() 
+tts.say('Gabi, go to work already!')
+tts.runAndWait() 
 """
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
