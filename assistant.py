@@ -1,17 +1,32 @@
 import datetime
 import webbrowser 
 import time
+
+import pyttsx3 
+import speech_recognition as sr
 #from chatbot import demo
 #demo()
 
-print("heyy")
+print("...")
+textSpeech = pyttsx3.init() 
 
-import speech_recognition as sr
+# Sets speed percent  
+textSpeech.setProperty('rate', 140) 
+# Set volume 0-1 
+textSpeech.setProperty('volume', 0.5)
+
+voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
+textSpeech.setProperty('voice', voice_id) 
+
+def tts(text):
+    textSpeech.say(text)
+    textSpeech.runAndWait() 
+
 speechRec = sr.Recognizer()
 
 def stt():
     with sr.Microphone() as source:
-        print("Talk")
+        print("Talk...")
         audio_text = speechRec.listen(source)
         print("Time over, thanks")
     # recognize_() method will throw a request error if the API is unreachable, hence using exception handling
@@ -21,6 +36,11 @@ def stt():
         except:
             print("Sorry, I did not get that")
 
+
+##################     
+# 
+#        
+tts('Nice to meet you Gabi!')
 stt()         
 """
 
@@ -78,20 +98,6 @@ while(True):
     else:
         break    
 """
-import pyttsx3 
-
-tts = pyttsx3.init() 
-
-# Sets speed percent  
-tts.setProperty('rate', 140) 
-# Set volume 0-1 
-tts.setProperty('volume', 0.5)
-
-voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
-tts.setProperty('voice', voice_id) 
-
-tts.say('Gabi, go to work already!')
-tts.runAndWait() 
 """
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
