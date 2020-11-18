@@ -17,7 +17,7 @@ textSpeech.setProperty('volume', 0.5)
 
 voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
 textSpeech.setProperty('voice', voice_id) 
-
+my_text = ''
 def tts(text):
     textSpeech.say(text)
     textSpeech.runAndWait() 
@@ -30,47 +30,13 @@ def stt():
         audio_text = speechRec.listen(source)
         print("Time over, thanks")
     # recognize_() method will throw a request error if the API is unreachable, hence using exception handling
-        
         try:
-            print("Text: " + speechRec.recognize_google(audio_text))
+            my_text = speechRec.recognize_google(audio_text)
+            print("Text: " + my_text)            
+            tts('You just said: ' + my_text) ###
+            return my_text
         except:
             print("Sorry, I did not get that")
-
-
-##################     
-# 
-#        
-tts('Nice to meet you Gabi!')
-stt()         
-"""
-
-import tensorflow as tf
-from keras.models import model_from_json
-
-json_file = open('/content/drive/My Drive/My_AI/MY MODELS/model_08_FEMALE_sigmoid_EmoMix.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-loaded_model = model_from_json(loaded_model_json)
-# load weights into new model
-loaded_model.load_weights("/content/drive/My Drive/My_AI/MY MODELS/Emotion_Voice_Detection_CNN_model_08_FEMALE_sigmoid_EmoMix.h5")
-print("Loaded model from disk")
-
-# evaluate loaded model on test data
-opt = tf.keras.optimizers.Adam(learning_rate=0.0001) ###
-loaded_model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
-#score = loaded_model.evaluate(x_testcnn, y_test, verbose=0)
-#print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1]*100))
-
-
-
-def command():
-    # voice command 
-    return 0;
-    
-
-def say():
-    # speech
-    return 0;
 
 def tellDay():
     dayOfWeek = datetime.datetime.today().weekday()
@@ -80,31 +46,24 @@ def tellDay():
 
 
 def tellTime():
-    time = str(datetime.datetime.now())  # there must be something better 
-    return f'It\'s {time.hour} {time.minutes}'
+    time = datetime.datetime.now()  # there must be something better 
+    return f'It\'s {str(time.hour)} {str(time.minute)}'
 
+
+##################     
+query = stt()  
 
 while(True):
-    query = input() # command()
+    #query = input() # command()
 
-    if 'tell' or 'which' or 'what' and 'day' or 'today' in query.lower(): 
+    if ('tell' or 'which' or 'what') and ('day' or 'today') in query.lower(): 
         print(tellDay())
+        tts(tellDay())
         break # continue
-    elif 'what' or 'tell' and 'time' in query.lower():
+    elif ('what' or 'tell') and 'time' in query.lower():
         print(tellTime())
         break # continue
     elif query == 'exit':
         break
     else:
         break    
-"""
-"""
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-for voice in voices:
-   engine.setProperty('voice', voice.id)
-   print(voice.id)
-   engine.say('The quick brown fox jumped over the lazy dog.')
-engine.runAndWait()
-
-"""
