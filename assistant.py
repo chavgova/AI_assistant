@@ -4,8 +4,6 @@ import time
 
 import pyttsx3 
 import speech_recognition as sr
-#from chatbot import demo
-#demo()
 
 print("...")
 textSpeech = pyttsx3.init() 
@@ -33,10 +31,12 @@ def stt():
         try:
             my_text = speechRec.recognize_google(audio_text)
             print("Text: " + my_text)            
-            tts('You just said: ' + my_text) ###
+            #tts('You just said: ' + my_text) 
             return my_text
         except:
-            print("Sorry, I did not get that")
+            print("I did not get that, sir")
+            tts("I did not get that sir")
+            exit()   # TODO: think of something better -> retry?
 
 def tellDay():
     dayOfWeek = datetime.datetime.today().weekday()
@@ -46,24 +46,28 @@ def tellDay():
 
 
 def tellTime():
-    time = datetime.datetime.now()  # there must be something better 
-    return f'It\'s {str(time.hour)} {str(time.minute)}'
+    time = datetime.datetime.now().strftime('%H:%M')  
+    return f'It\'s {time}'
 
 
 ##################     
-query = stt()  
+
+tts('How can I help you madam?')
 
 while(True):
-    #query = input() # command()
+    
+    query = stt()  
 
     if ('tell' or 'which' or 'what') and ('day' or 'today') in query.lower(): 
         print(tellDay())
         tts(tellDay())
-        break # continue
+        continue
     elif ('what' or 'tell') and 'time' in query.lower():
         print(tellTime())
-        break # continue
-    elif query == 'exit':
+        tts(tellTime())
+        continue
+    elif query == 'exit' or 'thanks exit':
         break
     else:
         break    
+# TODO: listen only when talking 
