@@ -70,7 +70,8 @@ def takeNote():
             tts('Done!') 
         file.close()    
 
-
+# TODO: clearNote()?
+# TODO: newNote()?
 ##################     
 
 tts('How can I help you madam?')
