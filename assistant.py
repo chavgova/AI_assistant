@@ -4,6 +4,7 @@ import time
 import wikipedia
 import pyttsx3 
 import speech_recognition as sr
+from spotify_local import SpotifyLocal
 
 print("...")
 textSpeech = pyttsx3.init() 
@@ -26,9 +27,9 @@ speechRec = sr.Recognizer()
 
 def stt():
     with sr.Microphone() as source:
-        print("Talk...")
+        print("I'm listening...")
         audio_text = speechRec.listen(source)
-        print("Time over, thanks")
+        print("...")
     # recognize_() method will throw a request error if the API is unreachable, hence using exception handling
         try:
             my_text = speechRec.recognize_google(audio_text)
@@ -67,21 +68,39 @@ while(True):
         print(tellDay())
         tts(tellDay())
         continue
+
     elif ('what' or 'tell') and 'time' in query.lower():
         print(tellTime())
         tts(tellTime())
         continue
+
     elif 'Wikipedia' in query:
         query = query.replace('wikipedia', '')
         results = wikipedia.summary(query, sentences = 3) # too long?
         print(results)
-        tts('According to wikipedia: ' + results)
-        
+        tts('According to wikipedia: ' + results)   
+        continue
+    elif ('take' or 'make') and 'note' in query:
+        file = open('aiNotes.txt', 'a+')
+        tts('What should I write?')
+        note = stt()
+        tts("What about a title?")
+        ans = stt()
+        if ans == 'no':
+            d = datetime.datetime.now()
+            file.write(d.strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + '\n--> ' + note)
+            tts('Done!')
+        else:
+            file.write(datetime.datetime.now().strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + f' < {ans.upper()} > \n--> ' + note)   
+            tts('Done!') 
+      
     elif query == 'exit' or 'thanks exit':
-        tts('Okay then, goodbye')
-        break
+            tts('Okay then, goodbye')
+            break
+
     else:
         break    
 
 
 # TODO: listen only when talking 
+# TODO: check wifi network ? 
