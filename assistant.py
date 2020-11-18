@@ -16,11 +16,11 @@ textSpeech.setProperty('volume', 0.5)
 voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
 textSpeech.setProperty('voice', voice_id) 
 my_text = ''
+
 def tts(text):
     textSpeech.say(text)
     textSpeech.runAndWait() # TODO: stop talking if 'stop'/'shut up' is said -> stopTalking()
 
-    
 
 speechRec = sr.Recognizer()
 
@@ -73,10 +73,12 @@ while(True):
         continue
     elif 'Wikipedia' in query:
         query = query.replace('wikipedia', '')
-        results = wikipedia.summary(query, sentences = 3)
-        tts('According to wikipedia: ' + results)
+        results = wikipedia.summary(query, sentences = 3) # too long?
         print(results)
+        tts('According to wikipedia: ' + results)
+        
     elif query == 'exit' or 'thanks exit':
+        tts('Okay then, goodbye')
         break
     else:
         break    
