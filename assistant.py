@@ -1,7 +1,7 @@
 import datetime
 import webbrowser 
 import time
-
+import wikipedia
 import pyttsx3 
 import speech_recognition as sr
 
@@ -18,7 +18,9 @@ textSpeech.setProperty('voice', voice_id)
 my_text = ''
 def tts(text):
     textSpeech.say(text)
-    textSpeech.runAndWait() 
+    textSpeech.runAndWait() # TODO: stop talking if 'stop'/'shut up' is said -> stopTalking()
+
+    
 
 speechRec = sr.Recognizer()
 
@@ -37,6 +39,9 @@ def stt():
             print("I did not get that, sir")
             tts("I did not get that sir")
             exit()   # TODO: think of something better -> retry?
+
+def stopTalking():  #### 
+    return ''
 
 def tellDay():
     dayOfWeek = datetime.datetime.today().weekday()
@@ -66,8 +71,15 @@ while(True):
         print(tellTime())
         tts(tellTime())
         continue
+    elif 'Wikipedia' in query:
+        query = query.replace('wikipedia', '')
+        results = wikipedia.summary(query, sentences = 3)
+        tts('According to wikipedia: ' + results)
+        print(results)
     elif query == 'exit' or 'thanks exit':
         break
     else:
         break    
+
+
 # TODO: listen only when talking 
