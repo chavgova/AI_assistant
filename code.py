@@ -1,3 +1,10 @@
+
+
+#from chatbot import demo
+#demo()
+
+
+
 import tensorflow as tf
 from keras.models import model_from_json
 
@@ -59,3 +66,19 @@ for voice in voices:
    print(voice.id)
    engine.say('The quick brown fox jumped over the lazy dog.')
 engine.runAndWait()
+
+# FIXME: spotify
+from spotify_local import SpotifyLocal
+    elif 'Spotify' in query:
+        with SpotifyLocal() as s:
+            s.playURI('spotify:playlist:3UoyI0Wog0JH30Up4GeLBC')
+        continue
+
+
+
+
+
+
+    if ('stop' or 'shut up') in stt():
+        textSpeech.close()
+        #stopTalking()
