@@ -55,6 +55,21 @@ def tellTime():
     time = datetime.datetime.now().strftime('%H:%M')  
     return f'It\'s {time}'
 
+def takeNote():
+        file = open('aiNotes.txt', 'a+')
+        tts('What should I write?')
+        note = stt()
+        tts("What about a title?")
+        ans = stt()
+        if ans == 'no':
+            d = datetime.datetime.now()
+            file.write(d.strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + '\n--> ' + note)
+            tts('Done!')
+        else:
+            file.write(datetime.datetime.now().strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + f' < {ans.upper()} > \n--> ' + note)   
+            tts('Done!') 
+        file.close()    
+
 
 ##################     
 
@@ -81,18 +96,8 @@ while(True):
         tts('According to wikipedia: ' + results)   
         continue
     elif ('take' or 'make') and 'note' in query:
-        file = open('aiNotes.txt', 'a+')
-        tts('What should I write?')
-        note = stt()
-        tts("What about a title?")
-        ans = stt()
-        if ans == 'no':
-            d = datetime.datetime.now()
-            file.write(d.strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + '\n--> ' + note)
-            tts('Done!')
-        else:
-            file.write(datetime.datetime.now().strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + f' < {ans.upper()} > \n--> ' + note)   
-            tts('Done!') 
+        takeNote()
+        continue
       
     elif query == 'exit' or 'thanks exit':
             tts('Okay then, goodbye')
