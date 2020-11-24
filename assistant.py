@@ -6,6 +6,7 @@ import pyttsx3
 import speech_recognition as sr
 from spotify_local import SpotifyLocal
 import numpy as np
+import random
 
 ######### EMOTION RECOGNITION
 import tensorflow as tf
@@ -165,10 +166,31 @@ def takeNote():
             file.write(datetime.datetime.now().strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + f' < {ans.upper()} > \n--> ' + note)   
             tts('Done!') 
         file.close()    
+        
+def guessTheNumberGame():
+    theNum = random.randint(0,100)
+    print('----> GUESS THE NUMBER GAME <----')
+    tts('Guess the number between 0 and 100! You have 5 chances!')
+    chance = 0
+    query = stt()
+    while query != 'exit game' and chance <= 5:
+        chance +=1
+        guess = int(query)
+        if guess == theNum:
+            tts(f'Congrats! You guessed it with {chance} chances!')
+            break
+        elif guess > theNum:
+            tts('go lower')
+        elif guess < theNum:
+            tts('go lower') 
+        else: tts('What?')          
+    if not chance <= 5:
+        tts('Well, That was your last chance and you lost!')
+        tts(f'The number is {theNum}.')
 
 # TODO: clearNote()?
 # TODO: newNote()?
-
+# TODO: to-do list - 'add to my Todo list ....', 'whats on my todo list', Deadlines and reminders 
 
 
 
@@ -185,7 +207,7 @@ tts('How can I help you madam?')
 while(True):
     
     query = stt() 
-    emoRec() 
+    #emoRec() 
     audio_counter += 1
 
 
@@ -205,17 +227,34 @@ while(True):
         print(results)
         tts('According to wikipedia: ' + results)   
         continue
+
     elif ('take' or 'make') and 'note' in query:
         takeNote()
         continue
-      
+
+    elif (('tell me' or 'give me') and "number") in query:
+        start_index = query.find('between')
+        end_index = start_index + len('between')
+        if start_index == -1:
+            tts(str(random.randint(1,101)))
+        else:
+            rangeRandom = query[end_index+1:].split(' ')
+            a,b = int(rangeRandom[0]), int(rangeRandom[2])
+            tts(str(random.randint(a, b)))
+        continue
+
+    elif ('play' and 'guess the number game') in query:
+        guessTheNumberGame()
+        continue
+
     elif query == 'exit' or 'thanks exit':
             tts('Okay then, goodbye')
-            break
+            break    
 
     else:
         break    
 
 
-# TODO: listen only when talking 
+# TODO: listen only when talking / wake up word
 # TODO: check wifi network ? 
+# TODO: guess the number game
