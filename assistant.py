@@ -166,27 +166,34 @@ def takeNote():
             file.write(datetime.datetime.now().strftime('\r\n' + '%d-%b-%Y | %I:%M %p') + f' < {ans.upper()} > \n--> ' + note)   
             tts('Done!') 
         file.close()    
-        
+
 def guessTheNumberGame():
-    theNum = random.randint(0,100)
+    theNum = int(random.randint(0,100))
     print('----> GUESS THE NUMBER GAME <----')
-    tts('Guess the number between 0 and 100! You have 5 chances!')
+    print(theNum)
+    tts('Guess the number between 0 and 100! You have 5 chances! Go!')
     chance = 0
     query = stt()
-    while query != 'exit game' and chance <= 5:
-        chance +=1
-        guess = int(query)
-        if guess == theNum:
-            tts(f'Congrats! You guessed it with {chance} chances!')
-            break
-        elif guess > theNum:
-            tts('go lower')
-        elif guess < theNum:
-            tts('go lower') 
-        else: tts('What?')          
-    if not chance <= 5:
-        tts('Well, That was your last chance and you lost!')
-        tts(f'The number is {theNum}.')
+    while query != 'exit game' and chance < 5:        
+        try: 
+            guess = int(query)
+            chance += 1
+            print(chance)
+            if chance == 5:
+                tts('Well, That was your last chance and you lost!')
+                tts(f'The number is {theNum}.')
+                break
+            if guess == theNum:
+                tts(f"That's it! You guessed it after {chance} chances!")
+                break
+            elif guess > theNum:
+                tts('go lower')
+            elif guess < theNum:
+                tts('go higher') 
+        except: 
+            tts('This is not a number.')  
+        query = stt()   
+        
 
 # TODO: clearNote()?
 # TODO: newNote()?
@@ -232,6 +239,11 @@ while(True):
         takeNote()
         continue
 
+    elif 'play' and 'guess the number game' in query:
+        guessTheNumberGame()
+        print('--- end ---')
+        continue
+
     elif (('tell me' or 'give me') and "number") in query:
         start_index = query.find('between')
         end_index = start_index + len('between')
@@ -241,10 +253,6 @@ while(True):
             rangeRandom = query[end_index+1:].split(' ')
             a,b = int(rangeRandom[0]), int(rangeRandom[2])
             tts(str(random.randint(a, b)))
-        continue
-
-    elif ('play' and 'guess the number game') in query:
-        guessTheNumberGame()
         continue
 
     elif query == 'exit' or 'thanks exit':
