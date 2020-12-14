@@ -7,7 +7,9 @@ import speech_recognition as sr
 from spotify_local import SpotifyLocal
 import numpy as np
 import random
+from PyDictionary import PyDictionary
 
+dictionary=PyDictionary()
 ######### EMOTION RECOGNITION
 import tensorflow as tf
 from tensorflow.keras.models import model_from_json
@@ -198,7 +200,7 @@ def guessTheNumberGame():
 # TODO: clearNote()?
 # TODO: newNote()?
 # TODO: to-do list - 'add to my Todo list ....', 'whats on my todo list', Deadlines and reminders 
-
+# TODO: translate words - print (dictionary.translate("life",'es'))
 
 
 
@@ -230,21 +232,22 @@ while(True):
 
     elif 'Wikipedia' in query:
         query = query.replace('wikipedia', '')
+        query = query.replace('according', '')
         results = wikipedia.summary(query, sentences = 3) # too long?
         print(results)
         tts('According to wikipedia: ' + results)   
         continue
 
-    elif ('take' or 'make') and 'note' in query:
+    elif ('take' or 'make') and 'note' in query.lower():
         takeNote()
         continue
 
-    elif 'play' and 'guess the number game' in query:
+    elif 'play' and 'guess the number game' in query.lower():
         guessTheNumberGame()
         print('--- end ---')
         continue
 
-    elif (('tell me' or 'give me') and "number") in query:
+    elif (('tell me' or 'give me') and "number") in query.lower():
         start_index = query.find('between')
         end_index = start_index + len('between')
         if start_index == -1:
@@ -255,6 +258,58 @@ while(True):
             tts(str(random.randint(a, b)))
         continue
 
+    elif (('tell' or 'give' or 'what') and 'synonym') in query.lower():
+        word = query.replace('tell', '')
+        word = word.replace('give', '')
+        word = word.replace('me', '')
+        word = word.replace('a', '')
+        word = word.replace('the', '')
+        word = word.replace('word', '')
+        word = word.replace('of', '')
+        word = word.replace('synonym', '')
+        word = word.replace('what', '')
+        word = word.replace("what's", '')
+        word = word.replace('is', '')
+        word = word.strip()
+        one, two = dictionary.synonym(word)[:2]
+        print(f'Synonyms of {word} are {one} and {two}.')
+        tts(f'Synonyms of {word} are {one} and {two}.')
+
+    elif (('tell' or 'give' or 'what') and 'antonym') in query.lower():
+        word = query.replace('tell', '')
+        word = word.replace('give', '')
+        word = word.replace('me', '')
+        word = word.replace('a', '')
+        word = word.replace('the', '')
+        word = word.replace('word', '')
+        word = word.replace('of', '')
+        word = word.replace('antonym', '')
+        word = word.replace('what', '')
+        word = word.replace("what's", '')
+        word = word.replace('is', '')
+        word = word.strip()
+        one, two = dictionary.antonym(word)[:2]
+        print(f'Antonyms of {word} are {one} and {two}.')
+        tts(f'Antonyms of {word} are {one} and {two}.')    
+
+    elif (('tell' or 'give' or 'what') and 'meaning') in query.lower():
+        word = query.replace('tell', '')
+        word = word.replace('give', '')
+        word = word.replace('me', '')
+        word = word.replace('a', '')
+        word = word.replace('the', '')
+        word = word.replace('word', '')
+        word = word.replace('of', '')
+        word = word.replace('meaning', '')
+        word = word.replace('what', '')
+        word = word.replace("what's", '')
+        word = word.replace('is', '')
+        word = word.strip()
+        print(dictionary.meaning(word).values())
+        meaning, *_ = dictionary.meaning(word).values()
+        print(f'The meaning of {word} is {meaning[0]} or {meaning[1]}.')
+        tts(f'The meaning of {word} is {meaning[0]} or {meaning[1]}.')   
+
     elif query == 'exit' or 'thanks exit':
             tts('Okay then, goodbye')
             break    
@@ -263,6 +318,10 @@ while(True):
         break    
 
 
+
+
 # TODO: listen only when talking / wake up word
 # TODO: check wifi network ? 
-# TODO: guess the number game
+# TODO: guide - ask it what it can do/how it works -> a speech explaining what functionalities there are
+# TODO: tell weather 
+       
