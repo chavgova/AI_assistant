@@ -11,18 +11,23 @@
     },
     {"tag": "thanks",
      "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
-     "responses": ["Happy to help!", "Any time!", "My pleasure", "I am happy when you are happy!"],
+     "responses": ["I am happy to help!", "Any time!", "My pleasure", "I am happy when you are happy!"],
      "context": [""]
     },
-    {"tag": "noanswer",
+    {"tag": "noAnswer",
      "patterns": [],
      "responses": ["Sorry, I can't understand you", "Please give me more info", "Not sure I understand"],
      "context": [""]
     },
-    {"tag": "options",
-     "patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What else can you do?"],
+    {"tag": "functionality",
+     "patterns": ["How you could help me?", "What you can do?", "What help do you provide?", "How you can be helpful?", "What else can you do?"],
      "responses": ["I can do tasks for you and answer questions.", "I can learn things on a specific topic and answer questions.", "I can tell you the time, date, search things in wikipedia, or we can play the number game.", "Also, I am able to give you synonyms, antonyms, and meaning of words."],
      "context": [""]
-    }
+    },
+    {"tag": "pickUpLines",
+        "patterns": ["Tell me a pick up line", "Flirt with me", "You are cute", "Can you flirt"],
+        "responses": ["Aside from taking my breath away, what do you do for a living?", "I ought to complain to Spotify for you not being named this week's hottest single.", "Do you happen to have a Band-Aid? 'Cause I scraped my knees falling for you.", "Do you have a map? I just got lost in your eyes.", "I believe in following my dreams. Can I have your Instagram?", "Is your name Google? Because you have everything I am searching for."],
+        "context": [""]
+       }
 ]
 }
