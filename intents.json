@@ -24,6 +24,11 @@
      "responses": ["I can do tasks for you and answer questions.", "I can learn things on a specific topic and answer questions.", "I can tell you the time, date, search things in wikipedia, or we can play the number game.", "Also, I am able to give you synonyms, antonyms, and meaning of words."],
      "context": [""]
     },
+    {"tag": "QUINN",
+        "patterns": ["Who are you", "what are you", "Who am I talking to"],
+        "responses": ["Well, my name is Quinn.", "I am Quinn - an AI assistant which recognizes emotions", "I am an AI assistant and my name is Quinn"],
+        "context": [""]
+       },
     {"tag": "pickUpLines",
         "patterns": ["Tell me a pick up line", "Flirt with me", "You are cute", "Can you flirt"],
         "responses": ["Aside from taking my breath away, what do you do for a living?", "I ought to complain to Spotify for you not being named this week's hottest single.", "Do you happen to have a Band-Aid? 'Cause I scraped my knees falling for you.", "Do you have a map? I just got lost in your eyes.", "I believe in following my dreams. Can I have your Instagram?", "Is your name Google? Because you have everything I am searching for."],
