@@ -233,6 +233,7 @@ while(True):
     elif 'Wikipedia' in query:
         query = query.replace('wikipedia', '')
         query = query.replace('according', '')
+        query = query.replace('to', '')
         results = wikipedia.summary(query, sentences = 3) # too long?
         print(results)
         tts('According to wikipedia: ' + results)   
@@ -315,9 +316,12 @@ while(True):
             break    
 
     else:
+        # AI chatbot 
         break    
 
 
+
+# TODO: "I still do not have the knowledge to answer that. would you like me to learn more about the subject?" --- learn
 
 
 # TODO: listen only when talking / wake up word
@@ -325,3 +329,12 @@ while(True):
 # TODO: guide - ask it what it can do/how it works -> a speech explaining what functionalities there are
 # TODO: tell weather 
        
+# TODO: emotional/daily diary at the end of the day       
+
+
+# TODO: The history of humanity - inventions, politics (basic knowledge )
+
+# QUESTION: when searching for an answer in txt file/ intents, does it formulate the answer or just copies it?
+# IDEA: have a database for own ai opinion which it remembers so it doesnt say self-excluding things 
+# IDEA: remember + update info about person "who is my role model?" 
+# IDEA: facts/recommendations based on personal info - the person is tall - "do you know that tall people ...."
