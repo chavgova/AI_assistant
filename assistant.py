@@ -45,6 +45,10 @@ voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN
 textSpeech.setProperty('voice', voice_id) 
 my_text = ''
 
+######################### IMPORT FILES #########################
+import basicTalk 
+
+
 def tts(text):
     textSpeech.say(text)
     textSpeech.runAndWait() # TODO: stop talking if 'stop'/'shut up' is said -> stopTalking()
@@ -316,7 +320,7 @@ while(True):
             break    
 
     else:
-        # AI chatbot 
+        basicTalk.intentResponse(query)
         break    
 
 
@@ -331,10 +335,10 @@ while(True):
        
 # TODO: emotional/daily diary at the end of the day       
 
-
 # TODO: The history of humanity - inventions, politics (basic knowledge )
 
 # QUESTION: when searching for an answer in txt file/ intents, does it formulate the answer or just copies it?
+
 # IDEA: have a database for own ai opinion which it remembers so it doesnt say self-excluding things 
 # IDEA: remember + update info about person "who is my role model?" 
 # IDEA: facts/recommendations based on personal info - the person is tall - "do you know that tall people ...."
