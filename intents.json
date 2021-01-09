@@ -38,6 +38,11 @@
         "patterns": ["you are great", "you are amazing", "you are very helpful", "you are awesome", "I like you", "I think you are great"],
         "responses": ["Thanks for the compliment!", "Aww thank you", "I am happy to hear that", "I appreciate that, thanks"],
         "context": [""]
-       }   
+       },
+       {"tag": "giveCompliment",
+        "patterns": ["compliment me", "give me a compliment", "what do you think about me", "what do you think of me", "do you like me", "what is your opinion about me"],
+        "responses": ["I appreciate you and our friendship.", "You're strong and you can achieve anything you want strong enough.", "I believe that you should be proud of yourself", "You are special. Stay true to yourself.", "Your consciousness amazes me!"],
+        "context": [""]
+       }
 ]
 }
