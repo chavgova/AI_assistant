@@ -112,17 +112,22 @@ def emoRec():
     features_live  = extractFeatures(demo_file, mel = True, mfcc = True, contrast = True, chroma = True, tonnetz = True)
     features_live = pd.DataFrame(data = features_live)
     features_live = features_live.stack().to_frame().T
-
+            # FIXME: NORMALIZATION
     lb = LabelBinarizer()
     features_live_2d = np.expand_dims(features_live, axis = 2)
     live_preds = loaded_model.predict(features_live_2d, batch_size = 32, verbose = 1)
     speech_emos_list_values = live_preds
     print(live_preds)
-    #lb.fit(live_preds)
-    all = np.argsort(-live_preds, axis = 1)[:, :8]
+    labels = ['anger', 'calm', 'disgusting', 'fear', 'joy', 'neutral', 'sad', 'surprised']
+    labels_array = np.array(labels)
+    lb.fit(labels_array)
+    all = np.argsort(-live_preds, axis = 1)[:, :8] # -!!!!!!!!!!!!! # FIXME  # axis =1
+    print(all)
+    
     for i in all:
-        print((lb.inverse_transform((i))))
-    best_n = np.argsort(-live_preds)[:, :3] # best_n = [* * *]
+        print((lb.fit_transform((i)))) #inverse_transform # FIXME
+        print((lb.inverse_transform((i)))) # nope
+    best_n = np.argsort(-live_preds, axis = 1)[:, :3] # best_n = [* * *]
 
     first_second = 0
     second_third = 0
@@ -136,7 +141,8 @@ def emoRec():
             num += 1
 
     for i in best_n:
-        print((lb.inverse_transform((i))))
+        print((lb.fit_transform((i))))
+        print((lb.inverse_transform((i))))  # nope
 
     print()
     print('First/Second:')
@@ -220,7 +226,7 @@ tts('How can I help you madam?')
 while(True):
     
     query = stt() 
-    #emoRec() 
+    emoRec() 
     audio_counter += 1
 
 
@@ -279,6 +285,7 @@ while(True):
         one, two = dictionary.synonym(word)[:2]
         print(f'Synonyms of {word} are {one} and {two}.')
         tts(f'Synonyms of {word} are {one} and {two}.')
+        continue
 
     elif (('tell' or 'give' or 'what') and 'antonym') in query.lower():
         word = query.replace('tell', '')
@@ -296,6 +303,7 @@ while(True):
         one, two = dictionary.antonym(word)[:2]
         print(f'Antonyms of {word} are {one} and {two}.')
         tts(f'Antonyms of {word} are {one} and {two}.')    
+        continue
 
     elif (('tell' or 'give' or 'what') and 'meaning') in query.lower():
         word = query.replace('tell', '')
@@ -314,15 +322,18 @@ while(True):
         meaning, *_ = dictionary.meaning(word).values()
         print(f'The meaning of {word} is {meaning[0]} or {meaning[1]}.')
         tts(f'The meaning of {word} is {meaning[0]} or {meaning[1]}.')   
+        continue
 
-    elif query == 'exit' or 'thanks exit':
-            tts('Okay then, goodbye')
-            break    
+   # elif query == 'exit' or query == 'thanks exit':
+   #         tts('Okay then, goodbye')
+   #         break    
 
     else:
-        basicTalk.intentResponse(query)
-        break    
-
+        res = basicTalk.intentResponse(query)
+        print(res)
+        tts(res)
+        continue    
+# FIXME: always goes into "ok goodbye"
 
 
 # TODO: "I still do not have the knowledge to answer that. would you like me to learn more about the subject?" --- learn
@@ -342,3 +353,7 @@ while(True):
 # IDEA: have a database for own ai opinion which it remembers so it doesnt say self-excluding things 
 # IDEA: remember + update info about person "who is my role model?" 
 # IDEA: facts/recommendations based on personal info - the person is tall - "do you know that tall people ...."
+
+# IDEA: "Tell me a story about yourself", "How did you feel in that situation?" => remember + "based on this situation you seem brave/shy..."
+
+
