@@ -73,8 +73,8 @@ def stt():
             #tts('You just said: ' + my_text) 
             return my_text
         except:
-            print("I did not get that, sir")
-            tts("I did not get that sir")
+            print("I did not get that")
+            tts("I did not get that")
             exit()   # TODO: think of something better -> retry?
 
 
@@ -344,28 +344,19 @@ while(True):
         tts(res)
         continue    
 
-# FIXME: always goes into "ok goodbye"
-
 
 # TODO: "I still do not have the knowledge to answer that. would you like me to learn more about the subject?" --- learn
 
 
 # TODO: listen only when talking / wake up word
-# TODO: check wifi network ? 
 # TODO: guide - ask it what it can do/how it works -> a speech explaining what functionalities there are
-# TODO: tell weather 
-       
+# TODO: tell weather; Sjould i take an umbrella       
 # TODO: emotional/daily diary at the end of the day       
-
 # TODO: The history of humanity - inventions, politics (basic knowledge )
-
-# QUESTION: when searching for an answer in txt file/ intents, does it formulate the answer or just copies it?
 
 # IDEA: have a database for own ai opinion which it remembers so it doesnt say self-excluding things 
 # IDEA: remember + update info about person "who is my role model?" 
 # IDEA: facts/recommendations based on personal info - the person is tall - "do you know that tall people ...."
 
 # IDEA: "Tell me a story about yourself", "How did you feel in that situation?" => remember + "based on this situation you seem brave/shy..."
-
-
 # IDEA: is there a chance for that to happen...?;;; "Yes or No"
