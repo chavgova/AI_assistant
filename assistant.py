@@ -47,7 +47,9 @@ my_text = ''
 
 ######################### IMPORT FILES #########################
 import basicTalk 
+import emoQuestion
 
+################################################################
 
 def tts(text):
     textSpeech.say(text)
@@ -226,7 +228,7 @@ tts('How can I help you madam?')
 while(True):
     
     query = stt() 
-    emoRec() 
+    #emoRec() 
     audio_counter += 1
 
 
@@ -327,12 +329,21 @@ while(True):
    # elif query == 'exit' or query == 'thanks exit':
    #         tts('Okay then, goodbye')
    #         break    
-
+    elif 'about emotions' in query:
+        tts('Of course!')
+        query = stt() 
+        while query != 'exit':
+            res = emoQuestion.bot_response(query)
+            print(res)
+            tts(res)
+            query = stt()
+        continue   
     else:
         res = basicTalk.intentResponse(query)
         print(res)
         tts(res)
         continue    
+
 # FIXME: always goes into "ok goodbye"
 
 
@@ -357,3 +368,4 @@ while(True):
 # IDEA: "Tell me a story about yourself", "How did you feel in that situation?" => remember + "based on this situation you seem brave/shy..."
 
 
+# IDEA: is there a chance for that to happen...?;;; "Yes or No"
