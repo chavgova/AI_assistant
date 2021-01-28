@@ -39,10 +39,18 @@
         "responses": ["Thanks for the compliment!", "Aww thank you", "I am happy to hear that", "I appreciate that, thanks"],
         "context": [""]
        },
+       {"tag": "quote",
+        "patterns": ["tell me a quote", "quote someone", "share a thought of someone", "give me another quote"],
+        "responses": ["Your emotions make you human. Even the unpleasant ones have a purpose. Don't lock them away. If you ignore them, they just get louder and angrier.", "The best and most beautiful things in the world cannot be seen or even touched. They must be felt with the heart.", "Choose thoughts that give you the emotions of being alive and excited about life.", "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
+             "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.", "Don't let others define you. Don't let the past confine you. Take charge of your life with confidence and determination and there are no limits on what you can do or be.", "The will to win, the desire to succeed, the urge to reach your full potential... these are the keys that will unlock the door to your personal excellence.",
+              "You do not have the right to feel helpless. No one can rescue you - You must help yourself. You are responsible for your life.", "Your relationship with yourself sets the tone for every other relationship you have."],
+        "context": [""]
+       },
        {"tag": "giveCompliment",
         "patterns": ["compliment me", "give me a compliment", "what do you think about me", "what do you think of me", "do you like me", "what is your opinion about me"],
         "responses": ["I appreciate you and our friendship.", "You're strong and you can achieve anything you want strong enough.", "I believe that you should be proud of yourself", "You are special. Stay true to yourself.", "Your consciousness amazes me!"],
         "context": [""]
        }
+
 ]
 }
