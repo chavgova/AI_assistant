@@ -18,7 +18,6 @@ import os
 import pandas as pd
 import glob 
 from librosa import display
-from sklearn.preprocessing import LabelBinarizer
 from sklearn.preprocessing import LabelEncoder
 
 json_file = open(r"C:\Users\ok\Documents\GABRIELA\ASSISTANT\MODELS\model_08_FEMALE_sigmoid_EmoMix.json", 'r')
@@ -115,42 +114,31 @@ def emoRec():
     features_live = pd.DataFrame(data = features_live)
     features_live = features_live.stack().to_frame().T
             # FIXME: NORMALIZATION
-    lb = LabelBinarizer()
-    features_live_2d = np.expand_dims(features_live, axis = 2)
-    live_preds = loaded_model.predict(features_live_2d, batch_size = 32, verbose = 1)
-    speech_emos_list_values = live_preds
-    print(live_preds)
-    labels = ['anger', 'calm', 'disgusting', 'fear', 'joy', 'neutral', 'sad', 'surprised']
-    labels_array = np.array(labels)
-    lb.fit(labels_array)
-    all = np.argsort(-live_preds, axis = 1)[:, :8] # -!!!!!!!!!!!!! # FIXME  # axis =1
-    print(all)
-    
+    #import torch
+    lb = LabelEncoder()
+    lb.classes_ = np.array(['female_anger', 'female_calm', 'female_disgust', 'female_fear','female_joy', 'female_neutral', 'female_sadness', 'female_surprise'])
+    features_live_2d = np.expand_dims(features_live, axis=2)
+    live_preds = loaded_model.predict(features_live_2d, batch_size=32, verbose = 1)
+    #print(live_preds)
+    all = np.argsort(-live_preds, axis=1)[:, :8]
     for i in all:
-        print((lb.fit_transform((i)))) #inverse_transform # FIXME
-        print((lb.inverse_transform((i)))) # nope
-    best_n = np.argsort(-live_preds, axis = 1)[:, :3] # best_n = [* * *]
-
-    first_second = 0
-    second_third = 0
+        print((lb.inverse_transform((i))))
+    print()
+    best_n = np.argsort(-live_preds)[:, :3] # best_n = [* * *]
 
     for n in best_n:
         k = n
         num = 1
         for k in n:   
+            #print(live_preds[0][n])
+            #print(k)
+            #print(n)
             if num == 1: first_second = live_preds[0][k] / live_preds[0][n][1]  
             elif num == 2: second_third = live_preds[0][k] / live_preds[0][n][2]
             num += 1
 
     for i in best_n:
-        print((lb.fit_transform((i))))
-        print((lb.inverse_transform((i))))  # nope
-
-    print()
-    print('First/Second:')
-    print(first_second)
-    print('Second/Third:')
-    print(second_third)    
+        print((lb.inverse_transform((i))))
 
 def stopTalking():  #### 
     return ''
@@ -228,7 +216,7 @@ tts('How can I help you madam?')
 while(True):
     
     query = stt() 
-    #emoRec() 
+    emoRec() 
     audio_counter += 1
 
 
@@ -346,8 +334,6 @@ while(True):
 
 
 # TODO: "I still do not have the knowledge to answer that. would you like me to learn more about the subject?" --- learn
-
-
 # TODO: listen only when talking / wake up word
 # TODO: guide - ask it what it can do/how it works -> a speech explaining what functionalities there are
 # TODO: tell weather; Sjould i take an umbrella       
